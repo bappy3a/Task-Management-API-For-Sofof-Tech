@@ -3,10 +3,8 @@
 namespace App\Services\Auth;
 
 use App\Interfaces\Auth\AuthServiceInterface;
-use App\Models\User;
-use Carbon\Carbon;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class AuthService implements AuthServiceInterface
 {
@@ -36,8 +34,7 @@ class AuthService implements AuthServiceInterface
         if ($user) {
             $user->tokens()->delete(); // Revoke all tokens
         }
-        Auth::logout(); // Log out the user
-        return 'okay';
+        return true;
     }
 
 

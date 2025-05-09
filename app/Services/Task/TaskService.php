@@ -83,4 +83,9 @@ class TaskService implements TaskServiceInterface
         return $this->show($id);
     }
 
+    public function assignUsers(Task $task, array $userIds): Task
+    {
+        $task->assignedUsers()->sync($userIds);
+        return $task->load(['assignedUsers', 'creator']);
+    }
 }
