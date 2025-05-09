@@ -1,0 +1,9 @@
+<?php
+
+namespace {{ namespace }};
+use App\Interfaces\BaseInterface;
+
+interface {{ class }} extends BaseInterface
+{
+
+}
