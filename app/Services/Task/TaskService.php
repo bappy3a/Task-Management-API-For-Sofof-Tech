@@ -67,4 +67,14 @@ class TaskService implements TaskServiceInterface
         return true;
     }
 
+    public function assign($request, $id){
+        $task = $this->show($id);
+        if (!$task) {
+            return false;
+        }
+        $task->assignedUsers()->sync($request->user_ids);
+
+        return $this->show($id);
+    }
+
 }

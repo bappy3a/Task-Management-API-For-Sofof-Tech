@@ -19,6 +19,7 @@ Route::group(['prefix' => 'v1','middleware' => ['cors', 'json']], function () {
 
     //task routes
     Route::group(['middleware' => ['auth:sanctum']], function () {
+        Route::post('tasks/{id}/assign', [TaskController::class, 'assign']);
         Route::apiResource('tasks',TaskController::class);
     });
     

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Task\AssingTaskRequest;
 use App\Http\Requests\Task\StoreTaskRequest;
 use App\Http\Requests\Task\UpdateTaskRequest;
 use App\Interfaces\Task\TaskServiceInterface;
@@ -76,12 +77,27 @@ class TaskController extends Controller
         try {
             $data = $this->service->delete($id);
             if(!$data){
-                return $this->ResponseSuccess([], null, 'Task Not Found!', 404);
+                return $this->ResponseSuccess([], null, 'Task Not Found!', 404,false);
             }
             return $this->ResponseSuccess([], null, 'Task successfully delete!', 200);
 
         } catch (\Exception $e) {
             return $this->ResponseError($e->getMessage(). " in " . $e->getFile() . " on line " . $e->getLine(), null, 'Data Not Found!');
+        }
+    }
+    /**
+     * Restore the specified resource from storage.
+     */
+    public function assign(AssingTaskRequest $request,$id): JsonResponse
+    {
+        try {
+            $data = $this->service->assign($request,$id);
+            if(!$data){
+                return $this->ResponseSuccess([], null, 'Task Not Found!', 404,false);
+            }
+            return $this->ResponseSuccess($data);
+        } catch (\Exception $e) {
+            return $this->ResponseError($e->getMessage(). " in " . $e->getFile() . " on line " . $e->getLine(), null, 'Data Process Error! Consult Tech Team');
         }
     }
 }
