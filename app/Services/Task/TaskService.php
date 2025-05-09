@@ -10,13 +10,19 @@ class TaskService implements TaskServiceInterface
     public function allPaginate($request,$perPage)  
     {
         return Task::withRelations()
+        ->when($request->has('status'), function ($query) use ($request) {
+            $query->where('status', str($request->status));
+        })
+        ->when($request->has('priority'), function ($query) use ($request) {
+            $query->where('priority', str($request->priority));
+        })
         ->when($request->has('search'), function ($query) use ($request) {
             $query->where(function ($query) use ($request) {
                 $query->where('title', 'like', '%' . $request->search . '%')
                     ->orWhere('description', 'like', '%' . $request->search . '%');
             });
         })
-        ->orderBy('created_at', 'desc')
+        ->orderBy('due_date',$request->sort === 'oldest' ? 'asc' : 'desc')
         ->paginate($perPage);
     }
     public function store($request){

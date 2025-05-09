@@ -21,40 +21,9 @@ class Task extends Model
         return $this->belongsToMany(User::class)->withTimestamps();
     }
 
-    public function scopeFilter($query, array $filters)
-    {
-        $query->when($filters['search'] ?? false, function ($query, $search) {
-            $query->where(function ($query) use ($search) {
-                $query->where('title', 'like', '%' . $search . '%')
-                    ->orWhere('description', 'like', '%' . $search . '%');
-            });
-        });
-    }
-    public function scopeSort($query, array $sort)
-    {
-        $query->when($sort['sort'] ?? false, function ($query, $sort) {
-            $query->orderBy('created_at', $sort);
-        });
-    }
-    public function scopePaginate($query, $perPage)
-    {
-        return $query->paginate($perPage);
-    }
     public function scopeWithRelations($query)
     {
         return $query->with(['creator:id,name,email,role','assignedUsers:id,name,email,role']);
-    }
-    public function scopeWithTrashed($query)
-    {
-        return $query->withTrashed();
-    }
-    public function scopeOnlyTrashed($query)
-    {
-        return $query->onlyTrashed();
-    }
-    public function scopeRestore($query)
-    {
-        return $query->restore();
     }
 
     public function getCreatedAtAttribute($value): string
