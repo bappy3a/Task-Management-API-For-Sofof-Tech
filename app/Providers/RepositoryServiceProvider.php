@@ -14,6 +14,11 @@ class RepositoryServiceProvider extends ServiceProvider
         //
 
 		$this->app->bind(
+			\App\Interfaces\Task\TaskServiceInterface::class,
+			\App\Services\Task\TaskService::class
+		);
+
+		$this->app->bind(
 			\App\Interfaces\Auth\AuthServiceInterface::class,
 			\App\Services\Auth\AuthService::class
 		);
