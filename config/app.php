@@ -84,6 +84,8 @@ return [
 
     'faker_locale' => env('APP_FAKER_LOCALE', 'en_US'),
 
+    'per_page' => env('APP_PER_PAGE', 10),
+
     /*
     |--------------------------------------------------------------------------
     | Encryption Key

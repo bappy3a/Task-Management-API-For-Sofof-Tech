@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Task\StoreTaskRequest;
+use App\Http\Requests\Task\UpdateTaskRequest;
 use App\Interfaces\Task\TaskServiceInterface;
 use Illuminate\Http\Request;
 
@@ -31,7 +33,7 @@ class TaskController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): JsonResponse
+    public function store(StoreTaskRequest $request): JsonResponse
     {
         try {
             $data = $this->service->store($request);
@@ -56,7 +58,7 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateTaskRequest $request, string $id)
     {
         try {
             $data = $this->service->update($request,$id);
@@ -74,9 +76,9 @@ class TaskController extends Controller
         try {
             $data = $this->service->delete($id);
             if(!$data){
-                return $this->ResponseSuccess([], null, 'Data Not Found!', 204);
+                return $this->ResponseSuccess([], null, 'Task Not Found!', 404);
             }
-            return $this->ResponseSuccess($data, null, 'Data successfully delete!', 204);
+            return $this->ResponseSuccess([], null, 'Task successfully delete!', 200);
 
         } catch (\Exception $e) {
             return $this->ResponseError($e->getMessage(). " in " . $e->getFile() . " on line " . $e->getLine(), null, 'Data Not Found!');

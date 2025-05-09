@@ -11,7 +11,6 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
 
 		$this->app->bind(
 			\App\Interfaces\Task\TaskServiceInterface::class,
@@ -21,11 +20,6 @@ class RepositoryServiceProvider extends ServiceProvider
 		$this->app->bind(
 			\App\Interfaces\Auth\AuthServiceInterface::class,
 			\App\Services\Auth\AuthService::class
-		);
-
-		$this->app->bind(
-			\App\Interfaces\HelloServiceInterface::class,
-			\App\Services\HelloService::class
 		);
 
     }
