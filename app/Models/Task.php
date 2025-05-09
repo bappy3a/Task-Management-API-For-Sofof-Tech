@@ -12,14 +12,15 @@ class Task extends Model
     use HasFactory, SoftDeletes;
     protected $guarded = ['id'];
 
-    public function user()
+    public function creator()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'creator_id');
     }
-    public function AssignedUser()
+    public function assignedUsers()
     {
-        return $this->belongsTo(User::class, 'assigned_to');
+        return $this->belongsToMany(User::class)->withTimestamps();
     }
+
     public function scopeFilter($query, array $filters)
     {
         $query->when($filters['search'] ?? false, function ($query, $search) {
@@ -41,7 +42,7 @@ class Task extends Model
     }
     public function scopeWithRelations($query)
     {
-        return $query->with(['user:id,name,email,role','AssignedUser:id,name,email,role']);
+        return $query->with(['creator:id,name,email,role','assignedUsers:id,name,email,role']);
     }
     public function scopeWithTrashed($query)
     {

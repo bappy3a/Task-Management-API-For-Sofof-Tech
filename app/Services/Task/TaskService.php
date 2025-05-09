@@ -21,8 +21,7 @@ class TaskService implements TaskServiceInterface
     }
     public function store($request){
         $task = new Task();
-        $task->user_id = $request->user()->id;
-        $task->assigned_to = $request->assigned_to;
+        $task->creator_id = $request->user()->id;
         $task->title = $request->title;
         $task->description = $request->description;
         $task->due_date = $request->due_date;
@@ -38,8 +37,7 @@ class TaskService implements TaskServiceInterface
         if (!$task) {
             return false;
         }
-        $task->user_id = $request->user()->id;
-        $task->assigned_to = $request->assigned_to;
+        $task->creator_id = $request->user()->id;
         $task->title = $request->title;
         $task->description = $request->description;
         $task->due_date = $request->due_date;
